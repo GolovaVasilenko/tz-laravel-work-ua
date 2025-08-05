@@ -10,18 +10,16 @@ class FilmService
     public function store(StoreFilmRequest $request)
     {
         $data = $request->validated();
-
         $posterPath = $request->hasFile('poster')
-            ? $request->file('poster')->store('posters', 'uploads')
+            ? $request->file('poster')->store('uploads')
             : env('APP_URL').'/uploads/default-poster.webp';
 
         $movie = Film::create([
-            'title' => $data['title'],
-            'poster_path' => $posterPath,
+            'film_name' => $data['film_name'],
+            'status' => $data['status'] ?? 0,
+            'poster' => env('APP_URL').'/'.$posterPath,
         ]);
 
         $movie->genres()->sync($data['genres']);
-
-        return redirect()->route('movies.index');
     }
 }

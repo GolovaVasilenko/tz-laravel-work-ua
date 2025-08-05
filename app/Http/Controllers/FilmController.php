@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFilmRequest;
 use App\Models\Film;
+use App\Models\Genre;
+use App\Services\FilmService;
 use Illuminate\Http\Request;
 
 class FilmController extends Controller
@@ -12,7 +15,8 @@ class FilmController extends Controller
      */
     public function index()
     {
-        //
+        $movies = Film::all();
+        return view('films.index', compact('movies'));
     }
 
     /**
@@ -20,15 +24,17 @@ class FilmController extends Controller
      */
     public function create()
     {
-        //
+        $genres = Genre::all();
+        return view('films.add', compact('genres'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFilmRequest $request, FilmService $service)
     {
-        //
+        $service->store($request);
+        return redirect()->route('movies.index');
     }
 
     /**
@@ -44,7 +50,8 @@ class FilmController extends Controller
      */
     public function edit(Film $film)
     {
-        //
+        $genres = Genre::all();
+        return view('films.edit', ['genres' => $genres, 'movie' => $film]);
     }
 
     /**
@@ -60,12 +67,13 @@ class FilmController extends Controller
      */
     public function destroy(Film $film)
     {
-        //
+        $film->deleteOrFail();
+        return redirect()->route('movies.index');
     }
 
     public function publish(Film $movie)
     {
-        $movie->update(['status' => true]);
+        $movie->update(['status' => 1]);
         return back()->with('status', 'Фильм опубликован');
     }
 }
