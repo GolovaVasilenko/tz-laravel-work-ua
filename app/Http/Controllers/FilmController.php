@@ -62,4 +62,10 @@ class FilmController extends Controller
     {
         //
     }
+
+    public function publish(Film $movie)
+    {
+        $movie->update(['status' => true]);
+        return back()->with('status', 'Фильм опубликован');
+    }
 }

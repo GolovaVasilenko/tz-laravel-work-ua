@@ -15,7 +15,9 @@ class GenreSeeder extends Seeder
     public function run(): void
     {
         DB::table('genres')->insert([
-            'genre_name' => Str::random(15),
+            ['genre_name' => 'Action'],
+            ['genre_name' => 'Comedy'],
+            ['genre_name' => 'Drama'],
         ]);
     }
 }

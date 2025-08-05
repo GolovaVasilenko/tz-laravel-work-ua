@@ -13,9 +13,6 @@ class GenreFilmSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('genre_films')->insert([
-            'genre_id' => random_int(1, 15),
-            'film_id' => random_int(1, 30),
-        ]);
+
     }
 }

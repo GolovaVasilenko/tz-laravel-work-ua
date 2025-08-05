@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGenreRequest;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 
@@ -21,15 +22,19 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+        return view('genres.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreGenreRequest $request)
     {
-        //
+        $data = $request->validated();
+        Genre::create([
+            'genre_name' => $data['genre_name']
+        ]);
+        return redirect()->route('genres.index');
     }
 
     /**
@@ -45,15 +50,19 @@ class GenreController extends Controller
      */
     public function edit(Genre $genre)
     {
-        //
+        return view('genres.edit', ['genre' => $genre]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Genre $genre)
+    public function update(StoreGenreRequest $request, Genre $genre)
     {
-        //
+        $data = $request->validated();
+        $genre->update([
+            'genre_name' => $data['genre_name']
+        ]);
+        return redirect()->route('genres.edit', [$genre]);
     }
 
     /**
@@ -61,6 +70,7 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
-        //
+        $genre->deleteOrFail();
+        return redirect()->route('genres.index');
     }
 }

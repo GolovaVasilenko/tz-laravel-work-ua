@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Film;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +15,11 @@ class FilmSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('films')->insert([
-            'film_name' => Str::random(30),
-            'status' => 0,
-            'poster' => env('APP_URL').'/uploads/default-poster.webp'
+        $movie = Film::create([
+            'film_name' => 'Example Movie',
+            'poster' => env('APP_URL').'/uploads/default-poster.webp',
         ]);
+
+        $movie->genres()->attach([1, 2]);
     }
 }
