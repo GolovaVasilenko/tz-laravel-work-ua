@@ -22,4 +22,19 @@ class FilmService
 
         $movie->genres()->sync($data['genres']);
     }
+
+    public function update(StoreFilmRequest $request, Film $movie)
+    {
+        $data = $request->validated();
+        $posterPath = $request->hasFile('poster')
+            ? $request->file('poster')->store('uploads')
+            : env('APP_URL').'/uploads/default-poster.webp';
+
+        $movie->update([
+            'film_name' => $data['film_name'],
+            'status' => $data['status'] ?? 0,
+            'poster' => env('APP_URL').'/'.$posterPath,
+        ]);
+        $movie->genres()->sync($data['genres']);
+    }
 }

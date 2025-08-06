@@ -57,9 +57,10 @@ class FilmController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Film $movie)
+    public function update(StoreFilmRequest $request, Film $movie, FilmService $service)
     {
-        //
+        $service->update($request, $movie);
+        return redirect()->route('movies.edit', [$movie]);
     }
 
     /**
