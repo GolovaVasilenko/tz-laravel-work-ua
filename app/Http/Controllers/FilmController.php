@@ -48,16 +48,16 @@ class FilmController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Film $film)
+    public function edit(Film $movie)
     {
         $genres = Genre::all();
-        return view('films.edit', ['genres' => $genres, 'movie' => $film]);
+        return view('films.edit', ['genres' => $genres, 'movie' => $movie]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Film $film)
+    public function update(Request $request, Film $movie)
     {
         //
     }
